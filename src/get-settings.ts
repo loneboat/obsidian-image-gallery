@@ -1,7 +1,8 @@
+import { dirname, normalize, join } from 'path'
 import { normalizePath, parseYaml, Platform } from 'obsidian'
 import renderError from './render-error'
 
-const getSettings = (src: string, container: HTMLElement) => {
+const getSettings = (filePath: string, src: string, container: HTMLElement) => {
   // parse the settings from the code block
   const settingsSrc: any = parseYaml(src)
 
@@ -32,7 +33,14 @@ const getSettings = (src: string, container: HTMLElement) => {
     images: undefined as string[],
   }
 
-  settings.path = normalizePath(settingsSrc.path)
+
+  if (settingsSrc.path.startsWith('./') || settingsSrc.path.startsWith('../')) {
+    settings.path = join(dirname(filePath), settingsSrc.path)
+  } else {
+    settings.path = normalizePath(settingsSrc.path)
+  }
+  settings.path = normalize(settings.path)
+
   settings.type = settingsSrc.type ?? 'horizontal'
   settings.radius = settingsSrc.radius ?? 0
   settings.gutter = settingsSrc.gutter ?? 8

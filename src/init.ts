@@ -14,6 +14,7 @@ export class imgGalleryInit extends MarkdownRenderChild {
 
   constructor(
     public plugin: ImgGallery,
+    public filePath: string,
     public src: string,
     public container: HTMLElement,
     public app: App
@@ -23,7 +24,7 @@ export class imgGalleryInit extends MarkdownRenderChild {
 
   async onload() {
     // parse and normalize settings
-    this._settings = getSettings(this.src, this.container)
+    this._settings = getSettings(this.filePath, this.src, this.container)
     this._imagesList = getImagesList(this.app, this.container, this._settings)
 
     // inject the pertinent kind of gallery
