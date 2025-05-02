@@ -56,14 +56,16 @@ In *[Live Preview](https://help.obsidian.md/Live+preview+update)* mode, the gall
 
 Settings can be customized in any order, in `yaml` syntax. Optional properties default to the values outlined in the tables below:
 
-| Option   | Default      | Alternatives    | Required | Description                            |
-| -------- | ------------ | --------------- | -------- | -------------------------------------- |
-| `path`   | -            | -               | Yes      | Path relative to the root of the vault |
-| `type`   | `horizontal` | `vertical`      | No       | Type of masonry                        |
-| `gutter` | `8`          | (any number)    | No       | Spacing in px between the images       |
-| `radius` | `0`          | (any number)    | No       | Border radius in px of the images      |
-| `sortby` | `ctime`      | `mtime`, `name` | No       | Sort images by                         |
-| `sort`   | `desc`       | `asc`           | No       | Order of sorting                       |
+| Option   | Default      | Alternatives                 | Required | Description                                               |
+| -------- | ------------ | ---------------------------- | -------- | --------------------------------------------------------- |
+| `path`   | -            | -                            | Yes      | Path relative to the root of the vault                    |
+| `type`   | `horizontal` | `vertical`                   | No       | Type of masonry                                           |
+| `gutter` | `8`          | (any number)                 | No       | Spacing in px between the images                          |
+| `radius` | `0`          | (any number)                 | No       | Border radius in px of the images                         |
+| `sortby` | `ctime`      | `mtime`, `name`              | No       | Sort images by                                            |
+| `sort`   | `desc`       | `asc`                        | No       | Order of sorting                                          |
+| `images` | `[]`         | YAML list of image filenames | No       | Specific image files to use (instead of entire directory) |
+| `regex`  | `[]`         | YAML list of regex strings   | No       | Regular expressions to filter image files                 |
 
 Options applicable only for `type=horizontal`:
 
@@ -90,6 +92,11 @@ An additional note about the orientation of the masonry vs. the distribution of 
 ![Obsidian Image Gallery - Examples](assets/obsidian-image-gallery-examples.jpg)
 
 ## Changelog
+
+`1.1.2`
+  - Changed: "path" setting can now be relative to the current file's directory (prefix with "./").
+  - New: "images" setting. Accepts a YAML list of filenames. If this value is provided, only these files will be displayed from the directory. When provided. Overrides any specified sorting order, in favor of the order of the list.
+  - New: "regex" setting. Accepts a YAML list of regular expression strings. If this value is provided, only filenames that match AT LEAST ONE of the expressions will be displayed.
 
 `1.1.1`
   - fixed bug for the "open image in new tab" feature
