@@ -20,18 +20,38 @@ const getImagesList = (
   // filter the list of files to make sure we're dealing with images only
   const validExtensions = ["jpeg", "jpg", "gif", "png", "webp", "tiff", "tif"]
   const images = files.filter(file => {
-    if (file instanceof TFile && validExtensions.includes(file.extension)) return file
+    if ( 
+      ( Boolean(settings.images) ? settings.images.includes(file.name) : true) 
+      && file instanceof TFile 
+      && validExtensions.includes(file.extension)
+    ) return file
   })
 
-  // sort the list by name, mtime, or ctime
-  const orderedImages = images.sort((a: any, b: any) => {
-    const refA = settings.sortby === 'name' ? a['name'].toUpperCase() : a.stat[settings.sortby]
-    const refB = settings.sortby === 'name' ? b['name'].toUpperCase() : b.stat[settings.sortby]
-    return (refA < refB) ? -1 : (refA > refB) ? 1 : 0
-  })
+  let sortedImages
 
-  // re-sort again by ascending or descending order
-  const sortedImages = settings.sort === 'asc' ? orderedImages : orderedImages.reverse()
+  if (Boolean(settings.images)) {
+    // Explicitly sort the list as-specified in the provided image list
+    sortedImages = images.sort((a: any, b: any) => {
+      const indexA = settings.images.indexOf(a.name);
+      const indexB = settings.images.indexOf(b.name);
+      
+      // Handle cases where an item might not be in array x
+      if (indexA === -1) return 1;
+      if (indexB === -1) return -1;
+      
+      return indexA - indexB;
+    });
+  } else {
+    // otherwise, sort the list by name, mtime, or ctime
+    const orderedImages = images.sort((a: any, b: any) => {
+      const refA = settings.sortby === 'name' ? a['name'].toUpperCase() : a.stat[settings.sortby]
+      const refB = settings.sortby === 'name' ? b['name'].toUpperCase() : b.stat[settings.sortby]
+      return (refA < refB) ? -1 : (refA > refB) ? 1 : 0
+    })
+
+    // re-sort again by ascending or descending order
+    sortedImages = settings.sort === 'asc' ? orderedImages : orderedImages.reverse()
+  }
 
   // return an array of objects
   return sortedImages.map(file => {
