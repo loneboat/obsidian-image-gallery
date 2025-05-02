@@ -22,7 +22,7 @@ const getImagesList = (
   const images = files.filter(file => {
     if ( 
          ( settings.images.length ? settings.images.includes(file.name) : true) 
-      && ( settings.regex.length  ? settings.regex.some(rgx => rgx.test(file.name)) : true )
+      && ( settings.regex.length  ? settings.regex.some((rgx: RegExp) => rgx.test(file.name)) : true )
       && file instanceof TFile 
       && validExtensions.includes(file.extension)
     ) return file
