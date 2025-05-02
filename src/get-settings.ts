@@ -31,6 +31,7 @@ const getSettings = (filePath: string, src: string, container: HTMLElement) => {
     columns: undefined as number,
     height: undefined as number,
     images: undefined as string[],
+    regex: undefined as RegExp[],
   }
 
 
@@ -46,7 +47,8 @@ const getSettings = (filePath: string, src: string, container: HTMLElement) => {
   settings.gutter = settingsSrc.gutter ?? 8
   settings.sortby = settingsSrc.sortby ?? 'ctime'
   settings.sort = settingsSrc.sort ?? 'desc'
-  settings.images = settingsSrc.images ?? false
+  settings.images = settingsSrc.images ?? []
+  settings.regex = settingsSrc.regex ? settingsSrc.regex.map((pattern: string) => new RegExp(pattern)) : []
 
   // settings for vertical mansory only
   settings.mobile = settingsSrc.mobile ?? 1

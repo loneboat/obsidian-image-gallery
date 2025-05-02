@@ -21,7 +21,8 @@ const getImagesList = (
   const validExtensions = ["jpeg", "jpg", "gif", "png", "webp", "tiff", "tif"]
   const images = files.filter(file => {
     if ( 
-      ( Boolean(settings.images) ? settings.images.includes(file.name) : true) 
+         ( settings.images.length ? settings.images.includes(file.name) : true) 
+      && ( settings.regex.length  ? settings.regex.some(rgx => rgx.test(file.name)) : true )
       && file instanceof TFile 
       && validExtensions.includes(file.extension)
     ) return file
@@ -29,8 +30,10 @@ const getImagesList = (
 
   let sortedImages
 
-  if (Boolean(settings.images)) {
-    // Explicitly sort the list as-specified in the provided image list
+  if (settings.images.length && !settings.regex.length) {
+    // Explicitly sort the list as-specified in the provided image list,
+    // UNLESS we provided regexes, in which case skip this and do 
+    // normal sorting.
     sortedImages = images.sort((a: any, b: any) => {
       const indexA = settings.images.indexOf(a.name);
       const indexB = settings.images.indexOf(b.name);
