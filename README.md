@@ -95,7 +95,7 @@ An additional note about the orientation of the masonry vs. the distribution of 
 
 `1.1.2`
   - Changed: "path" setting can now be relative to the current file's directory. To do this, prefix 
-             the path with "./".
+             the path with "./" or "../".
 
   - New: "images" setting. Accepts a YAML list of filenames. If this value is provided, only these 
          files will be displayed from the directory. When provided. Overrides any specified sorting 
