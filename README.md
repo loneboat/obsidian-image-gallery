@@ -95,8 +95,13 @@ An additional note about the orientation of the masonry vs. the distribution of 
 
 `1.1.2`
   - Changed: "path" setting can now be relative to the current file's directory (prefix with "./").
-  - New: "images" setting. Accepts a YAML list of filenames. If this value is provided, only these files will be displayed from the directory. When provided. Overrides any specified sorting order, in favor of the order of the list.
-  - New: "regex" setting. Accepts a YAML list of regular expression strings. If this value is provided, only filenames that match AT LEAST ONE of the expressions will be displayed.
+
+  - New: "images" setting. Accepts a YAML list of filenames. If this value is provided, only these 
+         files will be displayed from the directory. When provided. Overrides any specified sorting 
+         order, in favor of the order of the list.
+
+  - New: "regex" setting. Accepts a YAML list of regular expression strings. If this value is provided, 
+         only filenames that match AT LEAST ONE of the expressions will be displayed.
 
 `1.1.1`
   - fixed bug for the "open image in new tab" feature
